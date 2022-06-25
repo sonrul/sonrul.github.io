@@ -1,0 +1,150 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+    <link rel="shortcut icon" href="https://sonrul.top/favicon.ico" type="image/x-icon">
+    <link href="css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="css/vuetify.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+    
+    <title>Cob Web Social work Library</title>
+
+</head>
+
+<body>
+    <main id="app">
+        <v-app>
+            <v-container style="margin-bottom: 70px;">
+                <v-row justify="center">
+                    <v-col md="9">
+                        <div class="text-h4 text-center pt-2">
+                            <v-badge content="v1.7" color="red">
+                                Cob Web Social work Library
+                            </v-badge>
+                        </div>
+                        <div class="subtitle-1 text-center pt-1">简单、实用的社工查询助手</div>
+                    </v-col>
+                </v-row>
+                <v-row justify="center">
+                    <v-col md="9">
+                        <v-row justify="center">
+                            <v-col sm="4">
+                                <v-btn x-large="" rounded="" color="primary" @click="downloadLanzou" block="">
+                                    <v-icon>mdi-download</v-icon>
+                                    <span class="text-none px-1 pb-1">
+                                        立刻下载
+                                        <!--small>（{{platformName[platform]}}）</small-->
+                                    </span>
+                                </v-btn>
+                            </v-col>
+                            <v-col sm="3" class="d-flex flex-row justify-center align-center">
+                                <span>
+                                    当前版本
+                                    <code>1.7.2</code>
+                                        
+                                </span>
+                            </v-col>
+                        </v-row>
+                        <v-row justify="center">
+                            <v-col sm="4">
+                                <v-btn large="" rounded="" @click="downloadGithub" color="normal" depressed="" block="">
+                                    <span class="text-capitalize px-2">购买卡密</span>
+                                </v-btn>
+                            </v-col>
+                            <v-col sm="3" class="d-flex flex-row justify-center align-center">
+                                <span>
+                                    制作人
+                                    <code>简/5</code>
+                                </span>
+                            </v-col>
+                        </v-row>
+                    </v-col>
+                </v-row>
+                <v-row justify="center">
+
+                </v-row>
+                <v-row justify="center" class="mt-12 text-center">
+                    <v-col cols="9">
+                        <h1 style="font-size: 22px;">公告</h1>
+                        <p>更新社工库版本为1.7.2<br>
+                            1.修复查询接口<br>
+                            2.修复开房记录<br>
+                            3.修复ip精准定位</p>
+                        <div class="grey--text text--darken-2">
+                            <span id="show_date_time"></span><br>
+                            Copyright © 2022 <a href="https://sonrul.top/">CobWeb</a> sonrul.top All Right Reserved
+                        </div>
+                    </v-col>
+                </v-row>
+                <v-footer fixed="" height="70px">
+                    <v-row justify="center">
+                        <v-col cols="9">
+                            <p style="text-align:center;"><a href="https://qm.qq.com/cgi-bin/qm/qr?k=CXBBLyqg6M0sy1Lf9lA4s-qf4aZfpDDB&amp;noverify=0" target="_blank">Sonrul</a> <a href="https://t.me/sonrul" target="_blank">Telegram:@sonrul</a> QQ:3157978051 </p>
+                        </v-col>
+                    </v-row>
+                </v-footer>
+            </v-container>
+        </v-app>
+    </main>
+    <script src="js/wikis.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/clipboard.min.js"></script>
+    <script src="js/vuetify.js"></script>
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <script src="js/ua-parser.min.js"></script>
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            vuetify: new Vuetify(),
+            data: {
+                latestVersion: "获取中...",
+                githubUrl: "https://afdian.net/@sonrul",
+                platform: "win",
+                platformName: {
+                    win: "Windows",
+                    mac: "macOS",
+                    linux: "GNU/Linux"
+                },
+                lanzouUrl: {
+                    win: "https://sonrul.top/cobweb/inquire/inquire.zip",
+                    mac: "https://sonrul.top/cobweb/inquire/inquire.zip",
+                    linux: "https://sonrul.top/cobweb/inquire/inquire.zip"
+                },
+                lanzouPasscode: {
+                    win: "1",
+                    mac: "1",
+                    linux: "1"
+                }
+            },
+            created: function () {
+                const uaParser = new UAParser();
+                const ua = uaParser.getOS();
+                if (ua.name === "Mac OS") {
+                    this.platform = "mac";
+                } else if (["Chromium OS", "Debian", "Deepin", "Mint", "Ubuntu"].includes(ua.name)) {
+                    this.platform = "linux";
+                }
+                fetch("")
+                    .then(r => r.json())
+                    .then(v => {
+                        this.latestVersion = v["tag_name"];
+                        // if (v["assets"] && v["assets"].length > 0) {
+                        //     const asset = v["assets"][0];
+                        //     this.githubUrl = asset["browser_download_url"];
+                        // } else {
+                            this.githubUrl = v["html_url"];
+                        // }
+                    });
+            },
+            methods: {
+                downloadLanzou: function () {
+                    window.open(this.lanzouUrl[this.platform]);
+                },
+                downloadGithub: function () {
+                    window.open(this.githubUrl)
+                }
+            }
+        });
+        const clipboard = new ClipboardJS("#copyPasscode");
+    </script>
+
+
+
+</body></html>
